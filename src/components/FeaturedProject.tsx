@@ -47,7 +47,7 @@ const FeaturedProject: React.FC = () => {
     setIsLoading(true);
     
     try {
-      const res = await fetch('http://docker-compose-n8n-1:5678/webhook/n8n_portfolio_invoker', {
+      const res = await fetch('/api/webhook-message', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

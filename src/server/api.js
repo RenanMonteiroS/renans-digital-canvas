@@ -68,6 +68,41 @@ app.post('/api/send-email', async (req, res) => {
   }
 });
 
+// Webhook message endpoint - secure backend proxy
+app.post('/api/webhook-message', async (req, res) => {
+  const { content, origin, userIP, sessionId } = req.body;
+  
+  try {
+    // Make the webhook call from backend (secure)
+    const webhookResponse = await fetch('http://docker-compose-n8n-1:5678/webhook/n8n_portfolio_invoker', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ 
+        content,
+        origin,
+        userIP,
+        sessionId
+      }),
+    });
+    
+    const data = await webhookResponse.json();
+    
+    res.status(200).json({ 
+      success: true, 
+      output: data.output || data 
+    });
+  } catch (error) {
+    console.error('Error calling webhook:', error);
+    res.status(500).json({ 
+      success: false, 
+      message: 'Error processing message', 
+      error: error.message 
+    });
+  }
+});
+
 // For any other request, serve the main index.html
 app.get(/^\/(?!api).*/, (req, res) => {
   res.sendFile(path.join(__dirname, '../../dist/index.html'));
