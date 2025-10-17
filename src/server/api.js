@@ -21,7 +21,7 @@ app.use(express.static(path.join(__dirname, '../../dist')));
 const EMAIL_USER = 'renanmonteirodes@gmail.com';
 const EMAIL_APP_PASSWORD = 'mwsj ezws jhza cohb'; // Replace with your Gmail App Password
 // Email sending endpoint
-app.post('/api/send-email', async (req, res) => {
+/* app.post('/api/send-email', async (req, res) => {
   const { name, email, message } = req.body;
   
   try {
@@ -66,7 +66,7 @@ app.post('/api/send-email', async (req, res) => {
     console.error('Error sending email:', error);
     res.status(500).json({ success: false, message: 'Error sending email', error: error.message });
   }
-});
+}); */
 
 // Webhook message endpoint - secure backend proxy
 app.post('/api/webhook-message', async (req, res) => {

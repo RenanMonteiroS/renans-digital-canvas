@@ -1,6 +1,6 @@
 import nodemailer from 'nodemailer';
 
-const sendMail = async(context) => {
+export const onRequestPost = async(context) => {
     
     const url = new URL(context.request.url);
 
